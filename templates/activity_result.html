@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Recommendations</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to right, #FFDEE9, #B5FFFC);
+      text-align: center;
+      padding: 20px;
+    }
+    h2 {
+      color: #FF4081;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .activity-box {
+      background: #fff;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 20px auto;
+      width: 80%;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+    .activity-box:hover {
+      transform: scale(1.05);
+    }
+    .activity-box h3 {
+      margin-top: 0;
+      color: #FF4081;
+    }
+    .activity-box p {
+      font-size: 16px;
+      color: #555;
+    }
+    .activity-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    .game-link {
+      display: inline-block;
+      background: #FF4081;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .game-link:hover {
+      background: #E91E63;
+      transform: scale(1.1);
+    }
+    .animated-character {
+      width: 120px;
+      margin-top: 20px;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Music for Extra Fun (Make sure happy_song.mp3 is in your static folder) -->
+  <audio autoplay loop>
+    <source src="{{ url_for('static', filename='happy_song.mp3') }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <h2>🎉 Fun Activities for {{ disorder }} ({{ duration }}) 🎨🎶</h2>
+  
+  {% for activity in recommendations %}
+    <div class="activity-box">
+      <h3>{{ activity['title'] }}</h3>
+      <p>{{ activity['description'] }}</p>
+      
+    </div>
+  {% endfor %}
+  
+  <br>
+  <a href="{{ url_for('patient_dashboard') }}" class="game-link">🏡 Back to Dashboard</a>
+  <br><br>
+  <!-- Animated character: A happy kid GIF from Giphy (example URL) -->
+  <img src="https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif" alt="Dancing Happy Kid" class="animated-character">
+
+</body>
+</html>

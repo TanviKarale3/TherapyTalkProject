@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>therapists Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            background: url('https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+            background-size: cover;
+            margin: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            text-align: left;
+        }
+        .sidebar img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            text-align: left;
+        }
+        .sidebar ul li:hover {
+            background: #555;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .tab {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .dashboard-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .dashboard-box {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .dashboard-box b {
+            display: block;
+            font-size: 32px;
+            margin-top: 10px;
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        tr:hover {
+            background: #f1f1f1;
+        }
+        .approve {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .reject {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='images/TherapyTalk-removebg-preview.png') }}" alt="Logo">
+        <ul>
+            <li onclick="showTab('dashboard')">📶Dashboard</li>
+            <li onclick="showTab('appointment-requests')">📆Pending Requests</li>
+            <li onclick="showTab('upload-therapy-plan')">📝Upload Therapy Plan</li>
+            <li onclick="showTab('start-session')">⏩Session Details</li>
+            <li onclick="showTab('pending-session')">🕒Pending Session </li>
+            <li onclick="showTab('todays-sessions')">🗓Today's Sessions</li>
+            <li onclick="showTab('active-patients')">🛏️Active Patients</li>
+            <li onclick="showTab('pending-appointment-requests')">📌Pending Appointment Request</li>
+            <li onclick="showTab('processed-appointments')">✏️Processed Appointments (Approved/Rescheduled)</li>
+            <li onclick="showTab('completed-therapy-patients')">✔️Therapy Completed Patients</li>
+            <li onclick="showTab('payment-history')">💳Payment History</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div id="dashboard" class="tab active">
+            <h1>Doctor Dashboard</h1>
+            <div class="dashboard-boxes">
+                <div class="dashboard-box">
+                    Total Requests
+                    <b>{{ total_requests }}</b>
+                </div>
+                <div class="dashboard-box">
+                    Active Patients
+                    <b>{{ active_patients }}</b>
+                </div>
+                <div class="dashboard-box">
+                    Completed Therapy
+                    <b>{{ completed_therapy }}</b>
+                </div>
+                <div class="dashboard-box">
+                    Pending Appointment Requests
+                    <b>{{ approved_requests}}</b>
+                </div>
+                <div class="dashboard-box">
+                    Pending Requests
+                    <b>{{ pending_requests }}</b>
+                </div>
+            </div>
+        </div>
+
+        <div id="appointment-requests" class="tab">
+            <h2>Pending Requests</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Request Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pending_requests_list %}
+                        {% for request in pending_requests_list %}
+                            <tr>
+                                <td>{{ request[1] }}</td>
+                                <td>{{ request[2] }}</td>
+                                <td>{{ request[3] }}</td>
+                                <td>{{ request[4] }}</td>
+                                <td>{{ request[5] }}</td>
+                                <td>{{ request[6] }}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('accept_appointment', appointment_id=request[0]) }}">
+                                        <button type="submit">Approve</button>
+                                    </form>
+                                    <form method="post" action="{{ url_for('reject_appointment', appointment_id=request[0]) }}">
+                                        <button type="submit">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="7">No pending requests.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="upload-therapy-plan" class="tab">
+            <h2>Upload Therapy Plan</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Upload Plan</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if upload_plan_appointments %}
+                        {% for appointment in upload_plan_appointments %}
+                            <tr>
+                                <td>{{ appointment[1] }}</td>
+                                <td>{{ appointment[2] }}</td>
+                                <td>{{ appointment[3] }}</td>
+                                <td>{{ appointment[4] }}</td>
+                                <td>{{ appointment[5] }}</td>
+                                <td>{{ appointment[6] }}</td> <!-- Therapy Plan Status -->
+                                <td>
+                                    <form method="post" action="{{ url_for('upload_plan', appointment_id=appointment[0]) }}" enctype="multipart/form-data">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <!-- Hidden file input -->
+                                            <input type="file" name="therapy_plan" accept=".pdf,.doc,.docx" id="fileInput-{{ appointment[0] }}" style="display: none;" required>
+                                
+                                            <!-- Custom Upload Button -->
+                                            <button type="button" class="upload-btn" onclick="document.getElementById('fileInput-{{ appointment[0] }}').click();">
+                                                📂 Upload Plan
+                                            </button>
+                                
+                                            <!-- File name display (hidden initially) -->
+                                            <span id="fileName-{{ appointment[0] }}" style="font-size: 14px; color: #555; display: none;"></span>
+                                
+                                            <!-- Submit button (disabled initially) -->
+                                            <button type="submit" id="submitBtn-{{ appointment[0] }}" class="submit-btn" disabled>Submit</button>
+                                        </div>
+                                    </form>
+                                </td>
+                                
+                                <style>
+                                    .upload-btn {
+                                        background-color: #007bff;
+                                        color: white;
+                                        border: none;
+                                        padding: 8px 14px;
+                                        font-size: 14px;
+                                        border-radius: 5px;
+                                        cursor: pointer;
+                                        transition: 0.3s ease-in-out;
+                                    }
+                                
+                                    .upload-btn:hover {
+                                        background-color: #0056b3;
+                                    }
+                                
+                                    .submit-btn {
+                                        background-color: #28a745;
+                                        color: white;
+                                        border: none;
+                                        padding: 8px 14px;
+                                        font-size: 14px;
+                                        border-radius: 5px;
+                                        cursor: not-allowed;
+                                        opacity: 0.5;
+                                        transition: 0.3s ease-in-out;
+                                    }
+                                
+                                    .submit-btn.enabled {
+                                        cursor: pointer;
+                                        opacity: 1;
+                                    }
+                                
+                                    .submit-btn.enabled:hover {
+                                        background-color: #218838;
+                                    }
+                                </style>
+                                
+                                <script>
+                                    document.querySelectorAll("input[type='file']").forEach(fileInput => {
+                                        fileInput.addEventListener("change", function() {
+                                            const appointmentId = this.id.split('-')[1];  // Extract ID
+                                            const fileNameDisplay = document.getElementById(`fileName-${appointmentId}`);
+                                            const submitButton = document.getElementById(`submitBtn-${appointmentId}`);
+                                
+                                            if (this.files.length > 0) {
+                                                fileNameDisplay.textContent = this.files[0].name;  // Show selected file name
+                                                fileNameDisplay.style.display = "inline";  // Show filename text
+                                                submitButton.classList.add("enabled");  // Make submit button active
+                                                submitButton.disabled = false;
+                                            }
+                                        });
+                                    });
+                                </script>
+                                
+                                
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="7">No appointments for plan upload.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+
+        
+        <div id="start-session" class="tab">
+            <h2>Session Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Appointment Date</th>
+                        <th>Time Slot</th>
+                        <th>Meeting Link</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if start_session_list %}
+                        {% for patient in start_session_list %}
+                            <tr>
+                                <td>{{ patient[1] }}</td> <!-- Patient Name -->
+                                <td>{{ patient[2] }}</td> <!-- Disorder -->
+                                <td>{{ patient[3] }}</td> <!-- Email -->
+                                <td>{{ patient[4] }}</td> <!-- Contact -->
+                                <td>
+                                    <input type="text" name="appointment_date" value="{{ patient[5] }}" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" name="time_slot" value="{{ patient[6] }}" readonly>
+                                </td>
+                                <td>
+                                    {% if patient[7] %}
+                                        <a href="{{ patient[7] }}" target="_blank" style="color: green; font-weight: bold;">✔ Link Submitted</a>
+                                    {% else %}
+                                        <form action="{{ url_for('start_session', appointment_id=patient[0]) }}" method="POST">
+                                            <input type="hidden" name="appointment_id" value="{{ patient[0] }}">
+                                            <input type="text" name="meeting_link" placeholder="Enter Meeting Link" required style="width: 100%;">
+                                </td> <!-- Closing Meeting Link Column -->
+                                <td> <!-- Action Column -->
+                                            <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                                                Submit
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="8">No Approved Patients.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+            
+
+        <div id="todays-sessions" class="tab">
+            <h2>Today's Sessions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Session Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if todays_sessions %}
+                        {% for session in todays_sessions %}
+                            <tr>
+                                <td>{{ session[1] }}</td>  <!-- Patient Name -->
+                                <td>{{ session[2] }}</td>  <!-- Disorder -->
+                                <td>{{ session[3] }}</td>  <!-- Email -->
+                                <td>{{ session[4] }}</td>  <!-- Contact -->
+                                <td>{{ session[5] }}</td>  <!-- Time -->
+                                <td>{{ session[6] }}</td>  <!-- Status -->
+                                <td>
+                                    {% if session[7] %}  <!-- Session Link -->
+                                        <a href="{{ session[7] }}" target="_blank" class="join-btn">Join Meeting</a>
+                                    {% else %}
+                                        <span style="color: red;">No Link Provided</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="7">No sessions scheduled for today.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            
+            <style>
+                .join-btn {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    font-size: 14px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    transition: 0.3s ease-in-out;
+                }
+            
+                .join-btn:hover {
+                    background-color: #0056b3;
+                }
+            </style>
+            
+        </div>
+
+        <div id="active-patients" class="tab">
+            <h2>Active Patients</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if active_patients_list %}
+                        {% for appointment in active_patients_list %}
+                            <tr>
+                                <td>{{ appointment[1] }}</td>
+                                <td>{{ appointment[2] }}</td>
+                                <td>{{ appointment[3] }}</td>
+                                <td>{{ appointment[4] }}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('complete_appointment', appointment_id=appointment[0]) }}">
+                                        <button type="submit">Complete Therapy</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="5">No active patients.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="pending-appointment-requests" class="tab">
+            <h2>Pending Appointment Requests</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pending_payment_requests %}
+                        {% for request in pending_payment_requests %}
+                        <tr>
+                            <td>{{ request[1] }}</td> <!-- Patient Name -->
+                            <td>{{ request[2] if request[2] else 'Not Set' }}</td> <!-- Date -->
+                            <td>{{ request[3] | format_time }}</td>
+
+                             <!-- Time -->
+                            <td>
+                                <span style="color: red;">⏳ Awaiting Doctor's Action</span>
+                            </td>
+                            <td>
+                                <form action="{{ url_for('doctor_accept_appointment', request_id=request[0]) }}" method="POST">
+                                    <input type="hidden" name="action" value="accept">
+                                    <button type="submit" style="background-color: green; color: white;">✅ Accept</button>
+                                </form>
+    
+                                <form action="{{ url_for('doctor_accept_appointment', request_id=request[0]) }}" method="POST">
+                                    <input type="hidden" name="action" value="reschedule">
+                                    <input type="date" name="new_date" required>
+                                    <input type="time" name="new_time" required>
+                                    <button type="submit" style="background-color: orange; color: white;">🔄 Reschedule</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5">No pending actions for the doctor.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Processed Appointments -->
+    <div id="processed-appointments" class="tab">
+        <h2>Processed Appointments (Approved/Rescheduled)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if processed_appointments %}
+                    {% for request in processed_appointments %}
+                        <tr>
+                            <td>{{ request[1] }}</td> <!-- Patient Name -->
+                            <td>{{ request[2] if request[2] else 'Not Set' }}</td> <!-- Date -->
+                            <td>{{ request[3] | format_time }}</td>
+
+                            
+                            <td>
+                                {% if request[4] == 'Approved' %}
+                                    <span style="color: green;">✔ Approved</span>
+                                {% elif request[4] == 'Rescheduled' %}
+                                    <span style="color: orange;">🔄 Rescheduled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="4">No approved or rescheduled appointments.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+        
+    <div id="payment-history" class="tab">
+        <h2>Payment History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Transaction ID</th>
+            <th>Amount Received</th>
+            <th>Payment Status</th>
+            <th>Payment Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if payment_history %}
+            {% for payment in payment_history %}
+                <tr>
+                    <td>{{ payment[0] }}</td>  <!-- Patient Name -->
+                    <td>{{ payment[1] }}</td>  <!-- Transaction ID -->
+                    <td>₹{{ payment[2] }}</td>  <!-- Doctor Received Amount (80%) -->
+                    <td>{{ payment[3] }}</td>  <!-- Payment Status -->
+                    <td>{{ payment[4] }}</td>  <!-- Appointment Date -->
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="5">No payment history available.</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+    </div>
+
+
+<div id="pending-session" class="tab">
+    <h2>Pending Sessions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Disorder</th>
+                <th>Contact No.</th>
+                <th>Appointment Date</th>
+                <th>Time Slot</th>
+                <th>Meeting Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if pending_sessions %}
+                {% for session in pending_sessions %}
+                    <tr>
+                        <td>{{ session[1] }}</td>
+                        <td>{{ session[2] }}</td>
+                        <td>{{ session[3] }}</td>
+                        <td>{{ session[4] }}</td>
+                        <td>{{ session[5] }}</td>
+                        <td>
+                            {% if session[6] %}
+                                <a href="{{ session[6] }}" target="_blank">Join Meeting</a>
+                            {% else %}
+                                <span>No link provided</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">No pending sessions available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+    
+
+        <div id="completed-therapy-patients" class="tab">
+            <h2>Therapy Completed Patients</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disorder</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Sessions Completed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if completed_therapy_list %}
+                        {% for patient in completed_therapy_list %}
+                            <tr>
+                                <td>{{ patient[0] }}</td>
+                                <td>{{ patient[1] }}</td>
+                                <td>{{ patient[2] }}</td>
+                                <td>{{ patient[3] }}</td>
+                                <td>{{ patient[4] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="5">No completed therapy patients.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

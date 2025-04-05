@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            background: url('https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+            background-size: cover;
+            margin: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .sidebar ul li:hover {
+            background: #555;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .tab {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .dashboard-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .dashboard-box {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .dashboard-box b {
+            display: block;
+            font-size: 32px;
+            margin-top: 10px;
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        tr:hover {
+            background: #f1f1f1;
+        }
+        .button {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='images/TherapyTalk-removebg-preview.png') }}" alt="Logo">
+        <ul>
+            <li onclick="showTab('dashboard')">Dashboard</li>
+            <li onclick="showTab('select-doctor')">Select Therapist</li>
+            <li onclick="showTab('book-appointment')">Book Appointment</li>
+            <li onclick="showTab('appointment-details')">Appointment Details</li>
+            <li onclick="showTab('session-details')">Session Details</li>
+            <li onclick="showTab('therapy-plan')">Therapy Plans</li>
+            <li onclick="showTab('activity-recommendation')">Activity Recommendation</li>
+            <li onclick="showTab('payment-history')">Payment History</li>
+        </ul>
+    </div>
+    <div class="content">
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab active">
+            <h1>Welcome, {{ patient_name }}!</h1>
+            <h2>Your Dashboard</h2>
+            <div class="dashboard-boxes">
+                <div class="dashboard-box">Selected Therapist <b>{{ patient_dashboard_data.selected_therapist }}</b></div>
+                <div class="dashboard-box">Total Requests Sent <b>{{ patient_dashboard_data.total_requests_sent }}</b></div>
+                <div class="dashboard-box">Approved Appointments <b>{{ patient_dashboard_data.approved_appointments }}</b></div>
+                <div class="dashboard-box">Completed Sessions <b>{{ patient_dashboard_data.completed_sessions }}</b></div>
+            </div>
+        </div>
+
+        <!-- Select Doctor Tab -->
+        <div id="select-doctor" class="tab">
+            <h2>Select Therapist</h2>
+            {% if doctors %}
+                
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Experience</th>
+                        <th>Degree</th>
+                        <th>Fees</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for doctor in doctors %}
+                    <tr>
+                        <td>{{ doctor[1] }}</td>
+                        <td>{{ doctor[2] }}</td>
+                        <td>{{ doctor[3] }} years</td>
+                        <td>{{ doctor[4] if doctor[4] else 'N/A' }}</td>
+                        <td>₹{{ doctor[5] if doctor[5] is not none else 'N/A' }}</td>
+                        <td>
+                            <form action="{{ url_for('request_appointment', doctor_id=doctor[0]) }}" method="POST">
+                                <button type="submit" class="button">Request Appointment</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No therapists found for your disorder.</p>
+            {% endif %}
+        </div>
+        <!-- Book Appointment -->
+<!-- Book Appointment Section -->
+<!-- Book Appointment Section -->
+<div id="book-appointment" class="tab">
+    <h2 class="text-center text-primary">Book Your Appointment</h2>
+
+    {% if approved_doctors %}
+    <form action="{{ url_for('book_appointment') }}" method="POST" class="mt-4 p-4 border rounded shadow bg-white">
+        
+        <!-- Appointment Details Table -->
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Amount (Doctor Fee + ₹{{ default_amount }} Platform Charge)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center align-middle">
+                    <td>
+                        <select name="doctor_id" id="doctor-select" class="form-control" required onchange="updateAmount()">
+                            <option value="" disabled selected>Select Doctor</option>
+                            {% for doctor in approved_doctors %}
+                            <option value="{{ doctor[0] }}" data-fee="{{ doctor[5] }}">{{ doctor[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input type="date" name="appointmentDate" class="form-control text-center" required></td>
+                    <td>
+                        <select name="timeSlot" class="form-control text-center" required>
+                            <option>9:00 AM</option>
+                            <option>10:00 AM</option>
+                            <option>3:00 PM</option>
+                            <option>4:00 PM</option>
+                        </select>
+                    </td>
+                    <td class="text-success font-weight-bold">
+                        <span id="amount-display">₹0</span>  
+                        <input type="hidden" name="amount" id="amount-field">
+                    </td>
+                    <td><button type="submit" class="btn btn-primary px-4">✅ Book Now</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Payment Section -->
+        <div class="border p-4 mt-4 bg-light rounded shadow-sm">
+            <h3 class="text-center text-secondary">💳 Payment Information</h3>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img src="{{ url_for('static', filename='images/your_qr_code.jpg') }}" 
+                         alt="QR Code Payment" class="img-fluid rounded shadow" style="max-width: 200px;">
+                    <p class="mt-2 font-italic text-muted">Scan QR to complete the payment</p>
+                </div>
+                <div class="col-md-8" style="background: #f8f9fa; padding: 15px; border-radius: 6px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); max-width: 400px;">
+                    <div class="form-group mb-2" style="margin-bottom: 10px;">
+                        <label for="account_holder" class="font-weight-bold" 
+                               style="font-size: 14px; color: #333; display: block; margin-bottom: 3px;"><strong>Account Holder Name:</strong></label>
+                        <input type="text" name="account_holder" class="form-control" placeholder="Enter your name" required 
+                               style="border: 1px solid #ced4da; border-radius: 4px; padding: 6px; font-size: 12px; width: 100%;">
+                    </div>
+                    <div class="form-group mb-2" style="margin-bottom: 10px;">
+                        <label for="transaction_id" class="font-weight-bold" 
+                               style="font-size: 14px; color: #333; display: block; margin-bottom: 3px;"><strong>Transaction ID:</strong></label>
+                        <input type="text" name="transaction_id" class="form-control" placeholder="Enter Transaction ID" required 
+                               style="border: 1px solid #ced4da; border-radius: 4px; padding: 6px; font-size: 12px; width: 100%;">
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </form> <!-- ✅ Fixed missing form closing tag -->
+
+    <!-- JavaScript for Fee Auto-Update -->
+    <script>
+        var platformCharge = {{ default_amount }}; // ✅ Fetch platform charge dynamically
+
+        function updateAmount() {
+            var doctorSelect = document.getElementById("doctor-select");
+            var amountField = document.getElementById("amount-field");
+            var amountDisplay = document.getElementById("amount-display");
+
+            var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
+            var doctorFee = selectedOption.getAttribute("data-fee");
+
+            if (doctorFee) {
+                var totalAmount = parseFloat(doctorFee) + parseFloat(platformCharge);
+                amountField.value = totalAmount.toFixed(2);
+                amountDisplay.textContent = "₹" + totalAmount.toFixed(2);
+            } else {
+                amountField.value = "";
+                amountDisplay.textContent = "₹0";
+            }
+        }
+    </script>
+
+    {% else %}
+    <p class="alert alert-warning text-center">⚠️ No approved doctors available for booking.</p>
+    {% endif %}
+</div>
+
+
+
+
+
+        <!-- Appointment Details -->
+        <div id="appointment-details" class="tab">
+            <h2>Appointment Details</h2>
+            <table border="1">
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                    <th>Admin Message</th>
+                </tr>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment[1] }}</td>
+                    <td>{{ appointment[2] }}</td>
+                    <td>{{ appointment[3] }}</td>
+                    <td>{{ appointment[4] }}</td>
+                    <td>{{ appointment[5] }}</td>
+                    <td>{{ appointment[6] if appointment[6] else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="session-details" class="tab">
+            <h2>Session Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Therapist</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Meeting Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if session_details %}
+                        {% for session in session_details %}
+                            <tr>
+                                <td>{{ session[1] }}</td> <!-- Therapist -->
+                                <td>{{ session[2] }}</td> <!-- Date -->
+                                <td>{{ session[3] }}</td> <!-- Time -->
+                                <td>
+                                    {% if session[4] %}
+                                        <a href="{{ session[4] }}" target="_blank">Join Session</a>
+                                    {% else %}
+                                        No link available
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No active session available.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+
+        <!-- patient_dashboard.html -->
+<div id="therapy-plan" class="tab">
+    <h2>Therapy Plan</h2>
+    {% if therapy_plans %}
+    <table>
+        <tr>
+            <th>Doctor Name</th>
+            <th>Upload Date</th>
+            <th>Download Plan</th>
+        </tr>
+        {% for plan in therapy_plans %}
+        <tr>
+            <td>{{ plan[1] }}</td>  <!-- Doctor Name -->
+            <td>{{ plan[2] }}</td>  <!-- Upload Date -->
+            <td>
+                <a href="{{ url_for('download_plan', plan_name=plan[0]) }}">Download</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No therapy plans available.</p>
+{% endif %}
+
+</div>
+
+        <!-- Activity Recommendation -->
+<div id="activity-recommendation" class="tab">
+    <h2>Activity Recommendation</h2>
+    <form method="POST" action="{{ url_for('activity_recommendation') }}">
+        <table>
+            <tr>
+                <th>Disorder</th>
+                <th>Duration</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="disorder" required>
+                        <option value="" disabled selected>Select Disorder</option>
+                        <option value="Stuttering">Stuttering</option>
+                        <option value="Voice Disorder">Voice Disorder</option>
+                        <option value="Neurological Speech Issue">Neurological Speech Issue</option>
+                        <option value="Pediatric Speech Delay">Pediatric Speech Delay</option>
+                        <option value="Autism Communication Issue">Autism Communication Issue</option>
+                        <option value="Post-Surgery Recovery">Post-Surgery Recovery</option>
+                        <option value="Hearing and Speech Issue">Hearing and Speech Issue</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="duration" required>
+                        <option value="" disabled selected>Select Duration</option>
+                        <option value="15 days">15 days</option>
+                        <option value="1 month">1 month</option>
+                        <option value="3 months">3 months</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit" class="button">Get Recommendation</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+
+        <!-- Therapy Plan -->
+        <div id="therapy-plan" class="tab">
+            <h2>Therapy Plan</h2>
+            {% if therapy_plans %}
+            <table>
+                <tr>
+                    <th>Plan Name</th>
+                    <th>Description</th>
+                    <th>Uploaded On</th>
+                    <th>Action</th>
+                </tr>
+                {% for plan in therapy_plans %}
+                <tr>
+                    <td>{{ plan[1] }}</td>  <!-- Index 1: plan_name -->
+                    <td>{{ plan[2] }}</td>  <!-- Index 2: description -->
+                    <td>{{ plan[3] }}</td>  <!-- Index 3: uploaded_on -->
+                    <td><a href="{{ plan[4] }}" target="_blank" class="button">Download</a></td>  <!-- Index 4: file_link -->
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No therapy plans uploaded yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Payment History -->
+        <div id="payment-history" class="tab">
+            <h2>Payment History</h2>
+            <table>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Amount</th>
+                    <th>Payment Status</th>
+                    <th>Admin Message</th>
+                    <th>Date</th>
+                </tr>
+                {% for payment in payment_history %}
+                <tr>
+                    <td>{{ payment[0] }}</td>  <!-- Index 0: transaction_id -->
+                    <td>{{ payment[1] }}</td>  <!-- Index 1: amount -->
+                    <td>{{ payment[2] }}</td>  <!-- Index 2: payment_status -->
+                    <td>{{ payment[3] or 'N/A' }}</td>  <!-- Index 3: admin_message -->
+                    <td>{{ payment[4] }}</td>  <!-- Index 4: created_at -->
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+                <title>HOME</title>
+	<meta charset="utf-8">
+	<meta name="author" content="">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="HOME">
+	<meta name="keywords" content="HOME">
+
+
+                
+                    <meta name="twitter:card" content="summary_large_image" />
+    
+
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+
+                
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="https://afarkas.github.io/lazysizes/lazysizes.min.js"></script>
+
+    <!-- Ensure proper responsive scaling on mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- jQuery Library (Updated to Latest Version for Better Compatibility) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript (Required for Carousel/Slider to Work) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Google Maps API (If Needed for Maps) -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+<!-- LazySizes (For Lazy Loading Images, Improves Performance) -->
+<script src="https://afarkas.github.io/lazysizes/lazysizes.min.js"></script>
+
+    <!-- WEBSITE JS -->
+            
+    
+    <!-- PAGE JS -->
+        <!-- CSS ================================================== -->
+
+                        <link rel="stylesheet" href="{{ url_for('static', filename='css/combined.min.css') }}" type='text/css'>         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//static.sitemantic.com/webbuilder/js/lightbox/src/css/lightbox.css">
+    
+
+
+                        <link id="theme" rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}"  type='text/css'>
+                                            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Lato:400,700,300,100" type='text/css'>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com" type='text/css'>
+                    <link rel="stylesheet" href="https://fonts.gstatic.com" type='text/css'>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville+SC&amp;display=swap" type='text/css'>
+                	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+        <style id="footerBefore">
+            .footerBefore:before {
+                
+            }
+        </style>
+        <style>
+            .blockHeader {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 10px;
+            }
+            .logoWidget {
+                margin-right: 20px;
+            }
+            .navbar-default {
+                flex-grow: 1;
+            }
+            .navWidget .nav {
+                justify-content: flex-start;
+            }
+        </style>
+        <style>
+            .blockHeader {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 20px;
+                background-color: #f8f9fa;
+            }
+            .websiteLogoName {
+            font-size: 35px !important;
+            font-weight: bold;
+            color: black !important;
+            }
+            .navWidget .nav > li > a {
+                font-size: 15px !important;
+                font-weight: bold;
+                padding: 10px 15px;
+                color: black !important;
+            }
+            
+/* Ensure header is a relative container */
+.blockHeader {
+    position: relative;
+}
+
+/* Position the login button on the right side */
+.login-container {
+    position: absolute;
+    top: 20px;
+    right: 30px; /* Moves it to the right edge */
+    z-index: 1000;
+}
+
+/* Style the login/signup button */
+.login-btn {
+    background-color: #28a745 !important; /* Green */
+    color: black !important;
+    font-weight: bold !important;
+    padding: 10px 15px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    display: inline-block !important;
+    min-width: 140px; /* Prevents shrinking */
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s !important;
+}
+
+/* Hover effect */
+.login-btn:hover {
+    background-color: #218838; /* Darker green */
+    color: white !important; /* White text on hover */
+}
+
+        </style>
+        
+        
+        <!-- Bootstrap 5 (Latest) - Use this for all pages -->
+
+        
+
+        
+
+</head>
+<body>
+<div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.0';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <header class="blockHeader wb-header logo_left " fixed="false"><div class="container-fluid ">
+                                    <div class="logoWidget logo logoTextSettingClass     ">
+        <a href="{{ url_for('home') }}" title="">
+                                                
+                                            
+        
+                                                                                            
+            <span id="logoTextWrap" style="display: flex; align-items: center; gap: 10px;">
+  
+                <!-- Logo Image -->
+                <img src="{{ url_for('static', filename='images/TherapyTalk.png') }}" alt="TherapyTalk Logo" style="height:55px; width:auto;">
+
+
+              
+                <!-- Text Logo -->
+                
+              
+              </span>
+                        </a>
+</div>            
+                                <div class="navbar navbar-default navbar-static-top ">
+                                    <div class="navbar-header" id="13398755" compid="13398755" pageid="0" component-data="{}">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+</div>            
+                                        
+<div class="navWidget navbar-collapse collapse">
+    <ul class="parent-nav-ul nav navbar-nav navbar-center cl-effect-13"><li class="dropdown">
+                        <a href="{{ url_for('home') }}" pageslug="home" linktype="Page" class="siteNavLink">
+                            HOME
+                                                    </a>
+                                            </li>
+                                                          
+          
+                                                <li class="dropdown">
+                        <a href="{{ url_for('about') }}" pageslug="about" linktype="Page" class="siteNavLink">
+                            ABOUT
+                                                    </a>
+                                            </li>
+                                                          
+          
+                                                <li class="dropdown">
+                        <a href="{{ url_for('services') }}" pageslug="services" linktype="Page" class="siteNavLink">
+                            SERVICES
+                                                    </a>
+                                            </li>
+                                                          
+          
+                                                <li class="dropdown">
+                        <a href="{{ url_for('our_gallery') }}" pageslug="our-gallery" linktype="Page" class="siteNavLink">
+                            OUR GALLERY
+                                                    </a>
+                                            </li>
+                                                          
+          
+                                                <li class="dropdown">
+                        <a href="{{ url_for('contact_us') }}" pageslug="contact-us" linktype="Page" class="siteNavLink">
+                            CONTACT US
+                                                    </a>
+                                            </li>
+                                            
+                                    
+                                                                    
+                
+                                                                                                                                                                                            </ul></div>            
+    
+</div>
+            
+    
+</div>
+<div class="login-container">
+    <a href="{{ url_for('select_role') }}" class="login-btn">
+        Log In/Sign Up
+    </a>
+</div>
+            
+    
+    <div class="container header-image-text"></div>
+    
+
+</header>
+<section id="section-14435833" class="
+                imageCarouselWidget                 "><div id="myCarousel1236817249" class="sliderStyle2 carousel slide carouselWidget" data-ride="carousel" data-interval="false">
+    <!-- Indicators -->
+    <ol class="carousel-indicators"><li data-target="#myCarousel1236817249" data-slide-to="0" class=" active  image0">
+
+            </li>
+                    <li data-target="#myCarousel1236817249" data-slide-to="1" class=" image1">
+
+            </li>
+                    <li data-target="#myCarousel1236817249" data-slide-to="2" class=" image2">
+
+            </li>
+                    <li data-target="#myCarousel1236817249" data-slide-to="3" class=" image-3hwr9">
+
+            </li>
+            </ol><div class="carousel-inner">
+                    <div class="item active  image01236817249" data-parent="0">
+                                                    
+                
+                <img id="image01236817249" class="lazyload   first-slide img-responsive " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/6557a342a65732c.jpg" height="500"><div class="container">
+                    <div class="carousel-caption carouselRichTextWidget">
+
+                                                    <h1><span style="color: #000000;font-size: 42px;">Welcome To TherapyTalk</span></h1>
+<p><strong><span style="color: #000000;font-size: 18px;">Empowering Communication, Enhancing Lives.</span></strong><br data-start="72" data-end="75"><strong><span style="color: #000000;">Discover expert care for speech and communication challenges, tailored just for you. Whether it's stuttering, voice issues, or developmental delays, we're here to support your journey to clear and confident communication. Let's talk, listen, and grow&mdash;together!.</span></strong></p>
+                                            </div>
+                </div>
+            </div>
+                    <div class="item  image11236817249" data-parent="1">
+                                                    
+                
+                <img id="image11236817249" class="lazyload   second-slide img-responsive " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/depositphotos-126692400-stock-photo-medical-team-blurred-hospital-background.jpg" height="500"><div class="container">
+                    <div class="carousel-caption carouselRichTextWidget">
+
+                                                    
+<h1 style="text-align: center;"><span style="color: #e00d0d; font-size: 42px; ">New to TherapyTalk?</span></h1>
+<p><span style="font-size: 24px; "><strong><span style="color: #000000;">Sign up today and take the first step towards effective speech and language solutions.</span></strong></span></p>
+<p class="lead"><span style="font-size: 20px;  color: #000000;"><strong><a class="buy-now-button" 
+    href="{{url_for('select_role')}}" >
+     Sign Up / Log In
+ </a>
+ </strong></span></p>
+                                            </div>
+                </div>
+            </div>
+                    <div class="item  image21236817249" data-parent="2">
+                                                    
+                
+                <img id="image21236817249" class="lazyload   third-slide img-responsive " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/medicine-doctor-and-stethoscope-touching-icon-medical-network-connection-with-modern-interface-on-digital-tablet-in-hospital-background-medical-technology-network-concept-photo.jpg" height="500"><div class="container">
+                    <div class="carousel-caption carouselRichTextWidget">
+
+                                                    <h1><span style="color: #000000;font-size: 42px;">TherapyTalk Test Series</span></h1>
+<p><span style="color: #000000; font-size: 18px;">Enhance your speech and language skills with the TherapyTalk Test Series, designed by experts to help you practice, evaluate, and track your progress with interactive assessments. Improve communication abilities effectively with structured and engaging tests.</span><br><span style="color: #000000;"> </span></p>
+<p><a class="buy-now-button" href="#">BUY NOW</a></p>
+                                            </div>
+                </div>
+            </div>
+                    <div class="item  image-3hwr91236817249" data-parent="3">
+                                                    
+                
+                <img id="image-3hwr91236817249" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/medical-doctor-background-illustration-ai-generative-free-photo.jpg" height="500"><div class="container">
+                    <div class="carousel-caption carouselRichTextWidget">
+
+                                                    <h1><span style="color: #e00d0d;font-size: 42px;">TherapyTalk Legal Recognition</span></h1>
+<p class="main-para"><span style="color: #000000;">TherapyTalk is now officially registered with a Copyright Certificate and has successfully filed a patent with the Government of India. This marks a significant milestone in our journey to revolutionize speech therapy through technology.</span></p>
+<p><a class="buy-now-button" href="https://drive.google.com/file/d/1Q6eZTOP0maqKgTwFPBdmWhJyZYgfxb2r/view?usp=drive_link">Copyright Certificate</a></p>
+
+                                            </div>
+                </div>
+            </div>
+            </div>
+    <a class="left carousel-control" href="#myCarousel1236817249" role="button" data-slide="prev"><span class="fa fa-angle-left"></span></a>
+    <a class="right carousel-control" href="#myCarousel1236817249" role="button" data-slide="next"><span class="fa fa-angle-right"></span></a>
+</div>
+<!-- /.carousel -->            
+    
+</section>
+<div id="home" class="page wb-page">
+                                    
+
+
+<section id="section-13398607" class="
+                main-section                 "><div class="container boxWidget">
+                                    <div class="row custom-row ">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                    <div class="richTextWidget para-normal ">
+     <h4 class="polygon-bg">We Are Here For You</h4>
+<h1 class="section-2ndhead circle" style="margin-bottom: 20px;">Welcome to TherapyTalk&nbsp;</h1>
+<p class="main-para">At TherapyTalk, we are committed to enhancing the lives of individuals with communication challenges by providing innovative tools and resources for speech-language therapy. Our user-friendly software empowers clinicians to deliver personalized care, helping patients overcome barriers to effective communication and improve their quality of life.</p></div>            
+    
+</div>
+            
+                                <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                            <div class="imageWidget  ">
+                                                        <a href="" target="">
+                    <img class="lazyload banner-portrait-lg bg-dynamic" data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/istockphoto-1369596152-612x612.jpg"></a>
+        
+    </div>
+ 
+            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+    
+</section><section id="section-13398614" class="
+                section-2nd                 "><div class="container boxWidget">
+                                    <div class="custom-row row ">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                    <div class="richTextWidget   ">
+     <svg width="0" height="0"><defs><clippath id="rounded-polygon" clippathunits="objectBoundingBox"><path d="M 0.5, 0 C 0.65, 0, 1, 0.35, 1, 0.5 C 1, 0.65, 0.65, 1, 0.5, 1 C 0.35, 1, 0, 0.65, 0, 0.5 C 0, 0.35, 0.35, 0, 0.5, 0 Z"></path></clippath></defs></svg></div>            
+                                        <div class="imageWidget  ">
+                                                        <a href="" target="">
+                    <img class="lazyload img-full-width" data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/group-speech-therapy.jpg"></a>
+        
+    </div>
+ 
+            
+    
+</div>
+            
+                                <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                    <div class="richTextWidget para-normal ">
+     <h1 class="main-heading">Empowering Communication</h1>
+<p style="margin-bottom: 20px;">TherapyTalk is a cutting-edge Speech-Language Therapy Clinical Management Software designed to streamline the assessment, therapy planning, and progress tracking for speech-language pathologists and their patients. Our platform integrates features like speech recognition, real-time tracking, and personalized therapy plans to facilitate effective communication intervention.</p></div>            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+<style id="sectionStyle-16489190">
+    #section-16489190:before {
+    
+    }
+    .carousel-caption {
+    background: rgba(255, 255, 255, 0.4) !important; /* White with 50% transparency */
+    padding: 20px; /* Optional: Adjust spacing */
+    border-radius: 10px; /* Optional: Adds smooth rounded edges */
+}
+
+
+</style><section id="section-16489190" class="
+imageCarouselWidget ui-droppable  default-color-apply  default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply default-color-apply                 " style=""><div id="myCarousel2127029140" class="sliderStyle3 carousel slide carouselWidget" data-ride="carousel" data-interval="false">
+<!-- Indicators -->
+<ol class="carousel-indicators"><li data-target="#myCarousel2127029140" data-slide-to="0" class=" active  image-n52kg">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="1" class=" image-qr3qg">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="2" class=" image-f3znf">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="3" class=" image-6tdcn">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="4" class=" image-7knae">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="5" class=" image-yjp9o">
+
+</li>
+    <li data-target="#myCarousel2127029140" data-slide-to="6" class=" image-ba7j4">
+
+</li>
+</ol><div class="carousel-inner">
+    <div class="item active  image-n52kg2127029140" data-parent="0">
+                                    
+
+<img id="image-n52kg2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-07-42-a-realistic-image-of-a-child-with-a-pediatrician-in-a-bright-child-friendly-clinic-focusing-on-speech-therapy-for-pediatric-speech-delay-the-pediat_9213_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000; font-size: 28px;">stuttering Disorder</span></h1>
+<p><span style="color: #000000; font-size: 20px;">Stuttering is a speech disorder that disrupts the natural flow of speech. It involves repeated sounds, syllables, or words, as well as prolongations or blocks where speech is momentarily stopped.&nbsp;</span></p>
+<p><span style="color: #000000; font-size: 20px;"><strong>Specialist Of Therapist:</strong> Speech-Language Pathologists</span></p>
+<p><span style="color: #000000;"><a class="button theme-button" style="color: #000000;" role="button" href="#">Read More</a></span></p>
+                            </div>
+</div>
+</div>
+    <div class="item  image-qr3qg2127029140" data-parent="1">
+                                    
+
+<img id="image-qr3qg2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-06-44-a-realistic-image-of-a-child-with-a-neurologist-in-a-calm-clinic-setting-focusing-on-speech-therapy-for-a-neurological-speech-issue-the-child-is-sit.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="font-size: 28px;">Voice disorder</span></h1>
+<p><span style="color: #000000; font-size: 20px;">Abnormal pitch, loudness, or voice quality impacting speech. Causes include vocal cord issues, strain, or medical conditions. It can cause discomfort or affect communication.</span></p>
+<p><span style="color: #000000; font-size: 20px;"><strong data-start="233" data-end="247">Specialist Of Therapis</strong><strong data-start="487" data-end="501">t</strong>: Otolaryngologists (ENT Specialists).</span></p>
+<p><a class="theme-button" role="button" href="#">Read More</a></p>
+                            </div>
+</div>
+</div>
+    <div class="item  image-f3znf2127029140" data-parent="2">
+                                    
+
+<img id="image-f3znf2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-12-14-a-highly-realistic-image-for-the-therapytalk-test-series-web-application-showing-a-child-taking-an-interactive-speech-therapy-test-on-a-tablet-in-a_970_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000;  font-size: 28px;">Neurological Speech Issue</span></h1>
+<p><span style="color: #000000; font-size: 20px; ">Speech problems due to nervous system disorders, like dysarthria (muscle control issues) or aphasia (language processing issues). It can affect speech clarity and communication.</span></p>
+<p><span style="color: #000000; font-size: 20px; "><strong data-start="755" data-end="769">Specialist of Therapist</strong>: Neurologists.</span></p>
+<a class="theme-button" role="button" href="#">Read More</a>
+                            </div>
+</div>
+</div>
+    <div class="item  image-6tdcn2127029140" data-parent="3">
+                                    
+
+<img id="image-6tdcn2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-08-01-a-realistic-image-of-a-child-with-an-audiologist-in-a-speech-therapy-session-focused-on-hearing-and-speech-issues-the-child-is-wearing-hearing-aids-a-1_2583_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000;  font-size: 28px;">pediatric Speech Delay</span></h1>
+<p><span style=" color: #000000; font-size: 20px;">Delay in speech and language development in children, impacting communication and learning. It may result from hearing issues, developmental delays, or other underlying conditions.</span></p>
+<p><span style=" color: #000000; font-size: 20px;"><strong data-start="1000" data-end="1015">Specialists of Therapist</strong>: Pediatricians, Developmental Pediatricians.</span></p>
+<p><a class="theme-button" role="button" href="#">read more</a></p>
+                            </div>
+</div>
+</div>
+    <div class="item  image-7knae2127029140" data-parent="4">
+                                    
+
+<img id="image-7knae2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-07-48-a-realistic-image-of-a-child-with-a-psychologist-in-a-quiet-therapy-room-focusing-on-speech-therapy-for-autism-communication-issues-the-psychologist_1391_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000;  font-size: 28px;">Autism Communication Issue</span></h1>
+<p><span style=" color: #000000; font-size: 20px;">Challenges in social communication, including delayed speech, repetitive language, and difficulty understanding non-verbal cues. It impacts social interactions and expressive language.</span></p>
+<p><span style=" color: #000000; font-size: 20px;"><strong data-start="1284" data-end="1299">Specialists of Therapist</strong>: Psychiatrists, Psychologists.</span></p>
+<p><a class="theme-button" role="button" href="#">read more</a></p>
+                            </div>
+</div>
+</div>
+    <div class="item  image-yjp9o2127029140" data-parent="5">
+                                    
+
+<img id="image-yjp9o2127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-07-00-07-52-a-realistic-image-of-a-child-with-a-rehabilitation-specialist-in-a-modern-clinic-focusing-on-post-surgery-recovery-speech-therapy-the-child-is-seate_7481_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000; font-size: 28px;">Post-Surgery Recovery</span></h1>
+<p><span style="color: #000000; font-size: 20px;">Speech or swallowing difficulties following head, neck, or brain surgery. Rehabilitation helps restore speech, voice, or swallowing functions.</span></p>
+<p><span style="color: #000000; font-size: 20px; "><strong data-start="1507" data-end="1521">Specialist of Therapist</strong>: Rehabilitation Specialists.</span></p>
+<p><a class="theme-button" role="button" href="#">Read more</a></p>
+                            </div>
+</div>
+</div>
+    <div class="item  image-ba7j42127029140" data-parent="6">
+                                    
+
+<img id="image-ba7j42127029140" class="lazyload  " data-src="//innove-websites.s3.amazonaws.com/user_uploaded_image/ab8c10e4a0ebd6982f0a6865223b54cc/dall-e-2025-03-12-00-56-46-a-realistic-image-of-a-young-child-with-a-hearing-and-speech-disorder-in-a-speech-therapy-session-the-child-is-wearing-a-hearing-aid-and-is-interacti_827_crop.jpg" height="500"><div class="container">
+    <div class="carousel-caption carouselRichTextWidget">
+
+                                    <h1><span style="color: #000000;  font-size: 28px;">Hearing and Speech Issue</span></h1>
+<p><span style="color: #000000; font-size: 20px;">Speech and language difficulties due to hearing impairment, affecting sound recognition and speech development. It can impact communication and learning.</span></p>
+<p><span style="color: #000000; font-size: 20px;"><strong data-start="1741" data-end="1755">Specialist of Therapist</strong>: Audiologists.</span></p>
+<p><span style="color: #000000;"><a class="button theme-button" style="color: #000000;" role="button" href="#">Read More</a></span></p>
+                            </div>
+</div>
+</div>
+</div>
+<a class="left carousel-control" href="#myCarousel2127029140" role="button" data-slide="prev"><span class="fa fa-angle-left"></span></a>
+<a class="right carousel-control" href="#myCarousel2127029140" role="button" data-slide="next"><span class="fa fa-angle-right"></span></a>
+</div>
+<!-- /.carousel -->            
+    
+</section></div> 
+</section>
+<section id="section-about-services-gallery" class="section-5th">
+    <div class="container boxWidget">
+        <div class="row">
+
+            <!-- About Section -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="item-box item">
+                    <div class="iconWidget item-box-icon" style="font-size: 30px;">
+                        <i class="fa fa-info-circle"></i>
+                    </div>
+                    <div class="richTextWidget item-box-content">
+                        <h4 style="font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                            About
+                        </h4>
+                        <p style="font-family: 'Open Sans', sans-serif;">
+                            Transforming speech-language therapy with cutting-edge technology, TherapyTalk improves communication and optimizes clinical workflows. Our expert team empowers clinicians with evidence-based tools for assessment, personalized therapy, and real-time progress tracking.
+                        </p>
+                        <a class="theme-button" href="{{ url_for('about') }}?innove">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="item-box item">
+                    <div class="iconWidget item-box-icon" style="font-size: 30px;">
+                        <i class="fa fa-medkit"></i>
+                    </div>
+                    <div class="richTextWidget item-box-content">
+                        <h4 style="font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                            Services
+                        </h4>
+                        <p style="font-family: 'Open Sans', sans-serif;">
+                            TherapyTalk revolutionizes speech therapy with AI-driven assessments, customized therapy plans, and real-time progress tracking. Our speech recognition technology enables interactive sessions, while data management tools streamline clinical workflows for optimal efficiency.
+                        </p>
+                        <a class="theme-button" href="{{ url_for('services') }}?innove">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Gallery Section -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="item-box item">
+                    <div class="iconWidget item-box-icon" style="font-size: 30px;">
+                        <i class="fa fa-thumbs-up"></i>
+                    </div>
+                    <div class="richTextWidget item-box-content">
+                        <h4 style="font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                            Our Gallery
+                        </h4>
+                        <p style="font-family: 'Open Sans', sans-serif;">
+                            Discover the impact of TherapyTalk through inspiring success stories in our gallery. Witness how our innovative tools enhance engagement, motivation, and communication outcomes for individuals benefiting from speech-language therapy.  
+                        </p>
+                        <a class="theme-button" href="{{ url_for('our_gallery') }}?innove">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="section-13398622" class="section-5th">
+    <div class="container boxWidget">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <div class="richTextWidget content-center">
+                <h1 class="bg-background" style="color: white; font-family: 'Baskervville SC', serif; font-size: 42px; font-weight: bold;">
+                    What Our patients Say About Us
+                </h1>
+                <p class="mb-responsive" style="color: white; font-family: 'Open Sans', sans-serif;">
+                    Discover the experiences and success stories of our clients who have benefited from TherapyTalk.
+                </p>
+            </div>            
+        </div>
+
+        <!-- Testimonial 1 -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="testimonial-card">
+                <div class="imageWidget">
+                    <img class="lazyload testimonial-img" data-src="//static.sitemantic.com/webbuilder/images/testimonials/img-2.jpg">
+                </div>
+                <div class="richTextWidget">
+                    <p class="testimonial-content" style="font-family: 'Open Sans', sans-serif;">
+                        TherapyTalk has transformed the way I deliver communication therapy. The advanced features and personalized tools have significantly improved treatment outcomes for my patients.
+                    </p>
+                </div>
+                <div class="richTextWidget testimonial-bio">
+                    <h4 style="margin-top: 10px; font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                        Dr. Ananya Mehta
+                    </h4>
+                    <h6 style="font-family: 'Open Sans', sans-serif; font-size: 18px;">Speech-Language Pathologist</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="testimonial-card">
+                <div class="imageWidget">
+                    <img class="lazyload testimonial-img" data-src="//static.sitemantic.com/webbuilder/images/testimonials/img-6.jpg">
+                </div>
+                <div class="richTextWidget">
+                    <p class="testimonial-content" style="font-family: 'Open Sans', sans-serif;">
+                        As a parent, I have witnessed the positive impact of TherapyTalk on my child’s communication skills. The engaging platform and comprehensive resources have made a remarkable difference in our journey.
+                    </p>
+                </div>
+                <div class="richTextWidget testimonial-bio">
+                    <h4 style="margin-top: 10px; font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                        Rahul Sharma
+                    </h4>
+                    <h6 style="font-family: 'Open Sans', sans-serif; font-size: 18px;">Parent of TherapyTalk User</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="testimonial-card">
+                <div class="imageWidget">
+                    <img class="lazyload testimonial-img" data-src="//static.sitemantic.com/webbuilder/images/testimonials/img-8.jpg">
+                </div>
+                <div class="richTextWidget">
+                    <p class="testimonial-content" style="font-family: 'Open Sans', sans-serif;">
+                        The versatility and efficiency of TherapyTalk have enhanced the overall productivity of our clinic, allowing us to deliver high-quality care and achieve exceptional outcomes for our patients.
+                    </p>
+                </div>
+                <div class="richTextWidget testimonial-bio">
+                    <h4 style="margin-top: 10px; font-family: 'Baskervville SC', serif; font-size: 24px; font-weight: bold;">
+                        Dr. Vikram Patel
+                    </h4>
+                    <h6 style="font-family: 'Open Sans', sans-serif; font-size: 18px;">Clinical Director</h6>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer class="footerBefore wb-footer  wb-footer " style=""><div class="container boxWidget">
+                                    <div class="footer-content ">
+                                    <div class="row ">
+                                    <div class="col-md-4 col-lg-4 col-sm-12 ">
+                                    <div class=" ">
+                                    <div class="richTextWidget  ">
+     <h5>Contact</h5></div>            
+                                <div class="richTextWidget footer-links ">
+     <ul><li><span class="fa" style="margin-right: 18px;">&#61505;</span><a href="#">TherapyTalk, , Amravati, India</a></li>
+<li><span class="fa">&#61589;</span> <a href="#">+91 9112097197</a></li>
+<li><span class="fa">&#62134;&nbsp; &nbsp;<a href="mailto:vinaykakad56@gmail.com">TherapyTalk@gmail.com</a></span></li>
+<li>
+</ul></div>            
+    
+</div>
+            
+    
+</div>
+            
+                                <div class="col-md-4 col-lg-4 col-sm-12 ">
+                                    <div class="richTextWidget  ">
+     <h5>Services</h5></div>            
+                                <div class="richTextWidget footer-links ">
+     <ul><li><a href="{{ url_for('services') }}?innove">Personalized Therapy Planning</a></li>
+<li><a href="{{ url_for('services') }}?innove">Real-time Progress Tracking</a></li>
+<li><a href="{{ url_for('services') }}?innove">Speech Recognition Technology</a></li>
+</ul></div>            
+    
+</div>
+            
+                                <div class="footer-copyright ">
+                                    <div class="col-md-4 col-lg-4 col-sm-12 ">
+                                    <div class="richTextWidget  ">
+      <h5 style="font-weight: 700;">Social Links</h5></div>            
+                                
+
+<div class="socialIconsWidget     ">
+    <ul compid="13398770" pageid="0" component-data='{"socialIcons":[{"id":"icon1","slug":"facebook","url":"https:\/\/www.facebook.com\/","code":"&amp;#xf09a;"},{"id":"icon4","slug":"linkedin","url":"https:\/\/www.linkedin.com\/","code":"&amp;#xf0e1;"},{"id":"icon4","slug":"dribble","url":"https:\/\/dribbble.com\/","code":"&amp;#xf17d;"},{"id":"icon4","slug":"Github","url":"https:\/\/github.com\/","code":"&amp;#xf09b;"}]}' class="editSocialIcon"><li><a href="https://www.facebook.com/" target="_blank"><span class="fa">&#61594;</span></a></li>
+                    <li><a href="https://www.linkedin.com/" target="_blank"><span class="fa">&#61665;</span></a></li>
+                    <li><a href="https://dribbble.com/" target="_blank"><span class="fa">&#61821;</span></a></li>
+                    <li><a href="https://github.com/" target="_blank"><span class="fa">&#61595;</span></a></li>
+            </ul></div>            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+                                <div class="container boxWidget">
+                                    <div class="footer-copyright ">
+                                    <div class="row ">
+                                    <div class="richTextWidget col-lg-12 col-md-12 col-sm-12 ">
+     <p style="border-top: 1px solid white; padding: 5px; text-align: center; color: black;">Copyright 2024 All Rights Reserved.</p></div>            
+    
+</div>
+            
+    
+</div>
+            
+    
+</div>
+            
+    
+</footer>
+
+
+
+
+
+<script src="https://static.sitemantic.com/webbuilder/js/lightbox/src/js/lightbox.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+                            
+    <script>
+        window.lazySizesConfig = window.lazySizesConfig || {};
+        window.lazySizesConfig.lazyClass = 'lazy';
+        window.lazySizesConfig.srcAttr = 'data-original';
+
+        wow = new WOW(
+        {
+          animateClass: 'animated',
+          offset:       100
+        }
+      );
+      wow.init();
+    </script>
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38222064-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<script language='JavaScript' type='text/javascript'>
+
+var ecommerceConfig={
+    'bussinessAccount' :'',
+    'paymentGatewayUrl':''
+}
+
+var imageBg = null;
+    var imageBg = {"imageHeight":"","imageUrl":"","pageId":"home","text":"","bgOpacity":"0.5","bgColor":null,"showText":false,"parallaxEffect":false,"hide":false,"pageid":"411896"};
+
+$('.dropdown').find('a').each(function() {
+    $(this).attr('href',$(this).attr('href')+"?innove");
+});
+</script>
+
+
+<script>
+    var AppConfig = {
+
+        'siteId': '0799916ebf9b7dfc8eb243edac7afc23',
+        'api_url': 'https://system.sitemantic.com/apps/api/',
+        'api_key': '',
+        'template' : 'pro-pulse'
+    }
+
+</script>
+<script custom-script-id="website_global" src="//static.sitemantic.com/webbuilder/js/website_global.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Activate the carousel and enable auto sliding
+        $('.carousel').carousel({
+            interval: 3000, // Change slides every 3 seconds
+            pause: 'hover'  // Pause on hover
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role</title>
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #selected-role {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select Your Role</h2>
+        <select id="role" onchange="displayRole()">
+            <option value="" disabled selected>Select Role</option>
+            <option value="patient">Patient</option>
+            <option value="therapist">Therapist</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <p id="selected-role">Selected Role: None</p>
+        <button onclick="navigate()"><b>Sign In / Sign Up</b></button>
+    </div>
+
+    <<script>
+        function displayRole() {
+            const role = document.getElementById('role').value;
+            document.getElementById('selected-role').innerText = role
+                ? 'Selected Role: ' + role.charAt(0).toUpperCase() + role.slice(1)
+                : 'Selected Role: None';
+        }
+    
+        function navigate() {
+            const role = document.getElementById('role').value;
+    
+            if (!role) {
+                alert('Please select a role before proceeding.');
+                return;
+            }
+    
+            const urls = {
+                patient: "{{ url_for('login') }}",
+                therapist: "{{ url_for('doctor_login') }}",
+                Admin: "{{ url_for('admin_login') }}" // Corrected key to lowercase 'admin'
+            };
+    
+            if (urls[role]) {
+                window.location.href = urls[role];
+            } else {
+                alert('Invalid role selected.');
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>
