@@ -33,3 +33,47 @@ By incorporating advanced abilities such as therapy outcome prediction using the
 ![image](https://github.com/user-attachments/assets/b07838ea-5089-4ce4-bd16-4f1b35949e92)
 # NO OF REGISTERED PATIENTS
 ![image](https://github.com/user-attachments/assets/3bdf20cc-180c-4918-a257-7d32ea7b274d)
+
+
+## Run Locally
+
+1. Setup Your Project Folder
+```bash 
+    therapy-talk/
+    │
+├── index.html
+├── styles.css
+├── script.js
+├── backend/
+│   ├── app.py (if using Flask or Node.js for backend)
+│   └── ...
+└── database/
+    └── setup.sql (your MySQL script)
+```
+2. Run the Frontend
+Since it's static frontend (HTML/CSS/JS):
+
+You can simply open index.html in the browser:
+
+Right click → Open with browser
+Or use Live Server in VS Code:
+
+```bash
+  Right click on index.html → Open with Live Server
+```
+
+3. Start the Backend (Flask)
+
+```bash
+  pip install -r requirements.txt
+  python app.py
+```
+
+4. Set Up MySQL Database
+
+Open MySQL using XAMPP/WAMP or MySQL Workbench.
+
+Run your SQL script (setup.sql) to create the database and tables:
+```bash
+  SOURCE path/to/your/setup.sql;
+```
