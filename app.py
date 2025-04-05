@@ -93,7 +93,7 @@ def forget_password():
         # ✅ Send Email with Reset Link
         msg = Message(
             subject="Password Reset Request",
-            sender="vinaykakad56@gmail.com",
+            sender="tanvikarale@gmail.com",
             recipients=[email]
         )
         msg.html = render_template("reset_email.html", user_name=user_name, reset_link=reset_url)
@@ -643,7 +643,7 @@ def request_appointment(doctor_id):
 
         # 🔹 Send email to the doctor
         msg = Message("New Appointment Request",
-                      sender="vinaykakad56@gmail.com",
+                      sender="tanvikarale3@gmail.com",
                       recipients=[doctor_email])  # 🔹 Automatically fetched email
         msg.body = f"Dear Dr. {doctor_name},\n\nYou have received a new appointment request from {patient_name}.\n\nPlease log in to your dashboard to respond.\n\nBest Regards,\nTherapyTalk Team"
 
@@ -1115,7 +1115,7 @@ def accept_appointment(appointment_id):
             # ✅ Send email to the patient
             msg = Message(
                 subject="Doctor Approval - TherapyTalk",
-                sender="vinaykakad56@gmail.com",  
+                sender="tanvikarale3@gmail.com",  
                 recipients=[patient_email]
             )
             msg.body = f"""
@@ -1173,7 +1173,7 @@ def reject_appointment(appointment_id):
             # ✅ Send email to the patient
             msg = Message(
                 subject="Appointment Request Rejected - TherapyTalk",
-                sender="vinaykakad56@gmail.com",  
+                sender="tanvikarale3@gmail.com",  
                 recipients=[patient_email]
             )
             msg.body = f"""
@@ -1265,7 +1265,7 @@ def approve_appointment(request_id):
             # ✅ Send Rejection Email
             msg = Message(
                 subject="Appointment Rejected ❌",
-                sender="vinaykakad56@gmail.com",
+                sender="tanvikarale3@gmail.com",
                 recipients=[patient_email]
             )
             msg.body = f"""
@@ -1298,7 +1298,7 @@ def approve_appointment(request_id):
             # ✅ Send Approval Email
             msg = Message(
                 subject="Payment Successful & Appointment Under Review ✅",
-                sender="vinaykakad56@gmail.com",
+                sender="tanvikarale3@gmail.com",
                 recipients=[patient_email]
             )
             msg.body = f"""
@@ -1434,7 +1434,7 @@ def doctor_accept_appointment(request_id):
             # ✅ Send confirmation email to the patient
             msg = Message(
                 subject="Appointment Confirmed ✅",
-                sender="vinaykakad56@gmail.com",
+                sender="tanvikarale3@gmail.com",
                 recipients=[patient_email]
             )
             msg.body = f"""
@@ -1480,7 +1480,7 @@ def doctor_accept_appointment(request_id):
             # ✅ Send reschedule email to the patient
             msg = Message(
                 subject="Appointment Rescheduled 🔄",
-                sender="vinaykakad56@gmail.com",
+                sender="tanvikarale3@gmail.com",
                 recipients=[patient_email]
             )
             msg.body = f"""
